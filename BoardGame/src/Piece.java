@@ -1,22 +1,23 @@
 
 public class Piece {
-	String type;
+	String type = "";
 	
 	/**
 	 * Creates a basic piece object
-	 * @param type what kind of piece it is (like a rook in chess). Will always be stored as a String.toUpperCase()
+	 * @param type what kind of piece it is (like a rook in chess).
 	 */
 	public Piece(String type)
 	{
-		this.type = type.toUpperCase(); //upper case so it won't conflict with an empty piece
+		this.type = type;
 	}
 	
-	/**
-	 * Constructs an empty piece object
-	 * type = "empty" - all lower case to not interfere with a nonempty type
-	 */
-	public Piece()
+	public String getType()
 	{
-		type = "empty"; //lower case so it won't conflict with a real piece
+		return type;
+	}
+	
+	public void setType(String type) 
+	{
+		this.type = type;
 	}
 }

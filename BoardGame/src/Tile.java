@@ -11,11 +11,24 @@ public class Tile {
 		this.piece = piece;
 	}
 	
-	/**
-	 * Constructs a tile object which contains an empty piece
-	 */
 	public Tile()
 	{
-		piece = new Piece();
+		
+	}
+	
+	public Piece getPiece()
+	{
+		return piece;
+	}
+	
+	public void setPiece(Piece piece)
+	{
+		this.piece = piece;
+	}
+	
+	public String toString()
+	{
+		
+		return("[ ]");
 	}
 }
