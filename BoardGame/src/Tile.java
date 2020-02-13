@@ -11,9 +11,14 @@ public class Tile {
 		this.piece = piece;
 	}
 	
+	public Tile(String n)
+	{
+		piece = new Piece(n);
+	}
+	
 	public Tile()
 	{
-		
+		piece = new Piece();
 	}
 	
 	public Piece getPiece()
@@ -28,7 +33,13 @@ public class Tile {
 	
 	public String toString()
 	{
-		
-		return("[ ]");
+		if(piece.getType().isEmpty())
+		{
+			return("[ ]");
+		}
+		else
+		{
+			return("[" + piece.getType().substring(0,1) + "]");
+		}
 	}
 }

@@ -1,31 +1,40 @@
+
+
 public class Board {
 	private Tile[][] board;
-	int stride; //the amount of steps to reach the next row, should = x
-	int x;
-	int y;
+	private int x;
+	private int y;
 	
 	/**
 	 * Creates a square board
-	 * @param x
-	 * @param y
+	 * @param col number of columns
+	 * @param row number of rows
 	 */
-	public Board(int y, int x)
+	public Board(int col, int row)
 	{
-		this.x = x;
-		this.y = y;
-		stride = x;
-		board = new Tile[y][x];
+		x = col; //also the number of elements in each row
+		y = row; //the number of rows in board
+		board = new Tile[x][y];
 		for(int i = 0; i < y; i++)
 		{
-			System.out.println("adding a row");
 			for(int j = 0; j < x; j++)
 			{
-				System.out.println("add a tile");
-				board[i][j] = new Tile();
+				board[j][i] = new Tile();
 			}
 		}
+	
 	}
 	
+	public Tile[] getRow(int y)
+	{
+		Tile[] row = new Tile[x];
+		for(int i = 0; i < x; i++)
+		{
+			row[i] = board[i][y];
+		}
+		
+		return row;
+	}
 	public Tile[][] getBoard()
 	{
 		return board;
@@ -34,12 +43,11 @@ public class Board {
 	public String toString()
 	{
 		String out = "";
-		
-		for(int i = 0; i < y; i++)
+		for(int i = y - 1; i >= 0; i--)
 		{
 			for(int j = 0; j < x; j++)
 			{
-				out = out + board[i][j];
+				out = out + board[j][i];
 			}
 			out = out + "\n";
 		}

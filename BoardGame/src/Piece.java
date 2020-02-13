@@ -11,6 +11,11 @@ public class Piece {
 		this.type = type;
 	}
 	
+	public Piece()
+	{
+		type = "";
+	}
+	
 	public String getType()
 	{
 		return type;
