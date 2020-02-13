@@ -13,7 +13,7 @@ public class Piece {
 	
 	public Piece()
 	{
-		type = "";
+		type = "";	
 	}
 	
 	public String getType()

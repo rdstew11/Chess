@@ -1,5 +1,4 @@
 
-
 public class Board {
 	private Tile[][] board;
 	private int x;
@@ -22,7 +21,25 @@ public class Board {
 				board[j][i] = new Tile();
 			}
 		}
+	}
 	
+	public Tile[] getNE(int x, int y)
+	{
+		Tile[] ne;
+		
+		return ne;
+	}
+	
+	public boolean checkInbounds(int x, int y)
+	{
+		if(x < this.x && x >= 0 && y < this.y && y >= 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public Tile[] getRow(int y)
@@ -35,6 +52,17 @@ public class Board {
 		
 		return row;
 	}
+	
+	public Tile[] getColumn(int x)
+	{
+		Tile[] column = new Tile[y];
+		for(int i = 0; i < y; i++)
+		{
+			column[i] = board[x][i];
+		}
+		return column;
+	}
+	
 	public Tile[][] getBoard()
 	{
 		return board;
