@@ -1,6 +1,7 @@
 
 public class Tile {
-	Piece piece;
+	private Piece piece;
+	private boolean isEmpty;
 	
 	/**
 	 * Constructs a tile object which contains the given piece
@@ -9,16 +10,25 @@ public class Tile {
 	public Tile(Piece piece)
 	{
 		this.piece = piece;
+		isEmpty = false;
 	}
 	
 	public Tile(String n)
 	{
 		piece = new Piece(n);
+		isEmpty = false;
 	}
 	
 	public Tile()
 	{
-		piece = new Piece();
+		piece = null;
+		isEmpty = true;
+	}
+	
+	public void removePiece()
+	{
+		piece = null;
+		isEmpty = true;
 	}
 	
 	public Piece getPiece()
@@ -26,9 +36,15 @@ public class Tile {
 		return piece;
 	}
 	
+	public boolean checkEmpty() 
+	{
+		return isEmpty;
+	}
+	
 	public void setPiece(Piece piece)
 	{
 		this.piece = piece;
+		isEmpty = false;
 	}
 	
 	public String toString()

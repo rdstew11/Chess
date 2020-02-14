@@ -1,8 +1,12 @@
+import java.util.ArrayList;
 
 public class Board {
-	private Tile[][] board;
-	private int x;
-	private int y;
+	private ArrayList<Tile> board = new ArrayList<Tile>();
+	private ArrayList<Piece> deadPieces = new ArrayList<>();
+	private ArrayList<Piece> alivePieces = new ArrayList<>();
+	private int col;
+	private int row;
+
 	
 	/**
 	 * Creates a square board
@@ -11,71 +15,228 @@ public class Board {
 	 */
 	public Board(int col, int row)
 	{
-		x = col; //also the number of elements in each row
-		y = row; //the number of rows in board
-		board = new Tile[x][y];
-		for(int i = 0; i < y; i++)
+		this.col = col; //also the number of elements in each row
+		this.row = row; //the number of rows in board
+		for(int i = 0; i < this.row; i++)
 		{
-			for(int j = 0; j < x; j++)
+			for(int j = 0; j < this.col; j++)
 			{
-				board[j][i] = new Tile();
+				Tile t = new Tile();
+				board.add(t);
 			}
 		}
 	}
 	
-	public Tile[] getNE(int x, int y)
+	public Tile getTile(int x, int y)
 	{
-		Tile[] ne;
+		if(checkInbounds(x,y))
+		{
+			int index = y * x + x;
+			return(board.get(index));
+		}
+		else
+		{
+			return(null);
+		}
+	}
+	
+	private ArrayList<Tile> getNE(int x, int y)
+	{
+		ArrayList<Tile> ne = new ArrayList<Tile>();
+		while(checkInbounds(x,y))
+		{
+			ne.add(getTile(x,y));
+			x++;
+			y++;
+		}
+		return(ne);
+	}
+	
+	private ArrayList<Tile> getNW(int x, int y)
+	{
+		ArrayList<Tile> nw = new ArrayList<Tile>();
+		while(checkInbounds(x,y))
+		{
+			nw.add(getTile(x,y));
+			x--;
+			y++;
+		}
+		return nw;
+	}
+	
+	private ArrayList<Tile> getSE(int x, int y)
+	{
+		ArrayList<Tile> se = new ArrayList<Tile>();
+		while(checkInbounds(x,y))
+		{
+			se.add(getTile(x,y));
+			x++;
+			y--;
+		}
+		return se;
+	}
+	
+	private ArrayList<Tile> getSW(int x, int y)
+	{
+		ArrayList<Tile> sw = new ArrayList<Tile>();
+		while(checkInbounds(x,y))
+		{
+			sw.add(getTile(x,y));
+			x--;
+			y--;
+		}
+		return sw;
+	}
+	
+	private ArrayList<Tile> getDiagonals(int x, int y)
+	{
+		ArrayList<Tile> diagonals = new ArrayList<Tile>();
+		diagonals.addAll(getNE(x,y));
+		diagonals.addAll(getNW(x,y));
+		diagonals.addAll(getSE(x,y));
+		diagonals.addAll(getSW(x,y));
+		return diagonals;
+	}
+	
+	private ArrayList<Tile> getN(int x, int y)
+	{
+		ArrayList<Tile> n = new ArrayList<>();
+		while(checkInbounds(x,y))
+		{
+			n.add(getTile(x,y));
+			y++;
+		}
+		return n;
+	}
+	
+	private ArrayList<Tile> getS(int x, int y)
+	{
+		ArrayList<Tile> s = new ArrayList<>();
+		while(checkInbounds(x,y))
+		{
+			s.add(getTile(x,y));
+			y--;
+		}
+		return s;
+	}
+	
+	private ArrayList<Tile> getE(int x, int y)
+	{
+		ArrayList<Tile> e = new ArrayList<>();
+		while(checkInbounds(x,y))
+		{
+			e.add(getTile(x,y));
+			x++;
+		}
+		return e;
+	}
+	
+	private ArrayList<Tile> getW(int x, int y)
+	{
+		ArrayList<Tile> w = new ArrayList<>();
+		while(checkInbounds(x,y))
+		{
+			w.add(getTile(x,y));
+			x--;
+		}
+		return w;
+	}
+
+	public ArrayList<Tile> getDirection(String dir, int x, int y)
+	{
+		ArrayList<Tile> direction = new ArrayList<>();
+		dir = dir.toLowerCase();
 		
-		return ne;
+		if(dir.equals("n")) 
+		{
+			direction.addAll(getN(x,y));
+		}
+		else if(dir.equals("s"))
+		{
+			direction.addAll(getS(x,y));
+		}
+		else if(dir.equals("e"))
+		{
+			direction.addAll(getE(x,y));
+		}
+		else if(dir.equals("w"))
+		{
+			direction.addAll(getW(x,y));
+		}
+		else if(dir.equals("ne"))
+		{
+			direction.addAll(getNE(x,y));
+		}
+		else if(dir.equals("nw"))
+		{
+			direction.addAll(getNW(x,y));
+		}
+		else if(dir.equals("se"))
+		{
+			direction.addAll(getSE(x,y));
+		}
+		else if(dir.equals("sw"))
+		{
+			direction.addAll(getSW(x,y));
+		}
+		else if(dir.equals("d"))
+		{
+			direction.addAll(getDiagonals(x,y));
+		}
+		
+		return direction;
 	}
 	
 	public boolean checkInbounds(int x, int y)
 	{
-		if(x < this.x && x >= 0 && y < this.y && y >= 0)
+		if(x < this.col && x >= 0 && y < this.row && y >= 0)
 		{
-			return true;
+			return(true);
 		}
 		else
 		{
-			return false;
+			return(false);
 		}
 	}
 	
-	public Tile[] getRow(int y)
+	public ArrayList<Tile> getRow(int y)
 	{
-		Tile[] row = new Tile[x];
-		for(int i = 0; i < x; i++)
+		ArrayList<Tile> row = new ArrayList<Tile>();
+		for(int i = 0; i < col; i++)
 		{
-			row[i] = board[i][y];
+			row.add(getTile(i,y));
 		}
-		
 		return row;
 	}
 	
-	public Tile[] getColumn(int x)
+	public ArrayList<Tile> getColumn(int x)
 	{
-		Tile[] column = new Tile[y];
-		for(int i = 0; i < y; i++)
+		ArrayList<Tile> column = new ArrayList<Tile>();
+		for(int i = 0; i < row; i++)
 		{
-			column[i] = board[x][i];
+			column.add(getTile(x,i));
 		}
 		return column;
 	}
 	
-	public Tile[][] getBoard()
+	public ArrayList<Tile> getBoard()
 	{
 		return board;
+	}
+	
+	public ArrayList<Piece> getDeadPieces()
+	{
+		return deadPieces;
 	}
 	
 	public String toString()
 	{
 		String out = "";
-		for(int i = y - 1; i >= 0; i--)
+		for(int i = row - 1; i >= 0; i--)
 		{
-			for(int j = 0; j < x; j++)
+			for(int j = 0; j < col; j++)
 			{
-				out = out + board[j][i];
+				out = out + getTile(j,i);
 			}
 			out = out + "\n";
 		}

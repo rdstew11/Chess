@@ -1,6 +1,7 @@
 
 public class Piece {
 	String type = "";
+	String[] movements;
 	
 	/**
 	 * Creates a basic piece object
@@ -13,7 +14,7 @@ public class Piece {
 	
 	public Piece()
 	{
-		type = "";	
+		
 	}
 	
 	public String getType()
@@ -25,4 +26,16 @@ public class Piece {
 	{
 		this.type = type;
 	}
+	
+	public String[] getMovements()
+	{
+		return movements;
+	}
+	
+	public void setMovements(String[] movements)
+	{
+		this.movements = movements;
+	}
+	
+	
 }
