@@ -6,6 +6,7 @@ public class Board {
 	private ArrayList<Piece> alivePieces = new ArrayList<>();
 	private int col;
 	private int row;
+	private int stride;
 
 	
 	/**
@@ -13,15 +14,19 @@ public class Board {
 	 * @param col number of columns
 	 * @param row number of rows
 	 */
+	
 	public Board(int col, int row)
 	{
 		this.col = col; //also the number of elements in each row
 		this.row = row; //the number of rows in board
+		stride = col;
 		for(int i = 0; i < this.row; i++)
 		{
 			for(int j = 0; j < this.col; j++)
 			{
 				Tile t = new Tile();
+				t.setX(j);
+				t.setY(i);
 				board.add(t);
 			}
 		}
@@ -31,7 +36,7 @@ public class Board {
 	{
 		if(checkInbounds(x,y))
 		{
-			int index = y * x + x;
+			int index = y*stride + x;
 			return(board.get(index));
 		}
 		else
@@ -40,8 +45,10 @@ public class Board {
 		}
 	}
 	
-	private ArrayList<Tile> getNE(int x, int y)
+	private ArrayList<Tile> getNE(Tile tile)
 	{
+		int x = tile.getX();
+		int y = tile.getY();
 		ArrayList<Tile> ne = new ArrayList<Tile>();
 		while(checkInbounds(x,y))
 		{
@@ -52,8 +59,10 @@ public class Board {
 		return(ne);
 	}
 	
-	private ArrayList<Tile> getNW(int x, int y)
+	private ArrayList<Tile> getNW(Tile tile)
 	{
+		int x = tile.getX();
+		int y = tile.getY();
 		ArrayList<Tile> nw = new ArrayList<Tile>();
 		while(checkInbounds(x,y))
 		{
@@ -64,8 +73,10 @@ public class Board {
 		return nw;
 	}
 	
-	private ArrayList<Tile> getSE(int x, int y)
+	private ArrayList<Tile> getSE(Tile tile)
 	{
+		int x = tile.getX();
+		int y = tile.getY();
 		ArrayList<Tile> se = new ArrayList<Tile>();
 		while(checkInbounds(x,y))
 		{
@@ -76,8 +87,10 @@ public class Board {
 		return se;
 	}
 	
-	private ArrayList<Tile> getSW(int x, int y)
+	private ArrayList<Tile> getSW(Tile tile)
 	{
+		int x = tile.getX();
+		int y = tile.getY();
 		ArrayList<Tile> sw = new ArrayList<Tile>();
 		while(checkInbounds(x,y))
 		{
@@ -88,18 +101,20 @@ public class Board {
 		return sw;
 	}
 	
-	private ArrayList<Tile> getDiagonals(int x, int y)
+	private ArrayList<Tile> getDiagonals(Tile tile)
 	{
 		ArrayList<Tile> diagonals = new ArrayList<Tile>();
-		diagonals.addAll(getNE(x,y));
-		diagonals.addAll(getNW(x,y));
-		diagonals.addAll(getSE(x,y));
-		diagonals.addAll(getSW(x,y));
+		diagonals.addAll(getNE(tile));
+		diagonals.addAll(getNW(tile));
+		diagonals.addAll(getSE(tile));
+		diagonals.addAll(getSW(tile));
 		return diagonals;
 	}
 	
-	private ArrayList<Tile> getN(int x, int y)
+	private ArrayList<Tile> getN(Tile tile)
 	{
+		int x = tile.getX();
+		int y = tile.getY();
 		ArrayList<Tile> n = new ArrayList<>();
 		while(checkInbounds(x,y))
 		{
@@ -109,8 +124,10 @@ public class Board {
 		return n;
 	}
 	
-	private ArrayList<Tile> getS(int x, int y)
+	private ArrayList<Tile> getS(Tile tile)
 	{
+		int x = tile.getX();
+		int y = tile.getY();
 		ArrayList<Tile> s = new ArrayList<>();
 		while(checkInbounds(x,y))
 		{
@@ -120,8 +137,10 @@ public class Board {
 		return s;
 	}
 	
-	private ArrayList<Tile> getE(int x, int y)
+	private ArrayList<Tile> getE(Tile tile)
 	{
+		int x = tile.getX();
+		int y = tile.getY();
 		ArrayList<Tile> e = new ArrayList<>();
 		while(checkInbounds(x,y))
 		{
@@ -131,8 +150,10 @@ public class Board {
 		return e;
 	}
 	
-	private ArrayList<Tile> getW(int x, int y)
+	private ArrayList<Tile> getW(Tile tile)
 	{
+		int x = tile.getX();
+		int y = tile.getY();
 		ArrayList<Tile> w = new ArrayList<>();
 		while(checkInbounds(x,y))
 		{
@@ -141,47 +162,53 @@ public class Board {
 		}
 		return w;
 	}
-
+	
 	public ArrayList<Tile> getDirection(String dir, int x, int y)
+	{
+		Tile tile = getTile(x,y);
+		return getDirection(dir, tile);
+	}
+
+	public ArrayList<Tile> getDirection(String dir, Tile tile)
 	{
 		ArrayList<Tile> direction = new ArrayList<>();
 		dir = dir.toLowerCase();
 		
 		if(dir.equals("n")) 
 		{
-			direction.addAll(getN(x,y));
+			direction.addAll(getN(tile));
 		}
 		else if(dir.equals("s"))
 		{
-			direction.addAll(getS(x,y));
+			direction.addAll(getS(tile));
 		}
 		else if(dir.equals("e"))
 		{
-			direction.addAll(getE(x,y));
+			direction.addAll(getE(tile));
 		}
 		else if(dir.equals("w"))
 		{
-			direction.addAll(getW(x,y));
+			direction.addAll(getW(tile));
 		}
 		else if(dir.equals("ne"))
 		{
-			direction.addAll(getNE(x,y));
+			direction.addAll(getNE(tile));
 		}
 		else if(dir.equals("nw"))
 		{
-			direction.addAll(getNW(x,y));
+			direction.addAll(getNW(tile));
 		}
 		else if(dir.equals("se"))
 		{
-			direction.addAll(getSE(x,y));
+			direction.addAll(getSE(tile));
 		}
 		else if(dir.equals("sw"))
 		{
-			direction.addAll(getSW(x,y));
+			direction.addAll(getSW(tile));
 		}
 		else if(dir.equals("d"))
 		{
-			direction.addAll(getDiagonals(x,y));
+			direction.addAll(getDiagonals(tile));
 		}
 		
 		return direction;
@@ -199,6 +226,16 @@ public class Board {
 		}
 	}
 	
+	public boolean checkInbounds(Tile tile)
+	{
+		return checkInbounds(tile.getX(), tile.getY());
+	}
+	
+	
+	public ArrayList<Tile> getRow(Tile tile)
+	{
+		return getRow(tile.getY());
+	}
 	public ArrayList<Tile> getRow(int y)
 	{
 		ArrayList<Tile> row = new ArrayList<Tile>();
@@ -219,6 +256,11 @@ public class Board {
 		return column;
 	}
 	
+	public ArrayList<Tile> getColumn(Tile tile)
+	{
+		return getColumn(tile.getY());
+	}
+	
 	public ArrayList<Tile> getBoard()
 	{
 		return board;
@@ -236,7 +278,7 @@ public class Board {
 		{
 			for(int j = 0; j < col; j++)
 			{
-				out = out + getTile(j,i);
+				out = out +	getTile(j,i);
 			}
 			out = out + "\n";
 		}

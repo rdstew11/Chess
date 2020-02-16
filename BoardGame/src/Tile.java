@@ -2,7 +2,8 @@
 public class Tile {
 	private Piece piece;
 	private boolean isEmpty;
-	
+	private int x;
+	private int y;
 	/**
 	 * Constructs a tile object which contains the given piece
 	 * @param piece the piece in which the tile should contain
@@ -10,12 +11,6 @@ public class Tile {
 	public Tile(Piece piece)
 	{
 		this.piece = piece;
-		isEmpty = false;
-	}
-	
-	public Tile(String n)
-	{
-		piece = new Piece(n);
 		isEmpty = false;
 	}
 	
@@ -47,9 +42,29 @@ public class Tile {
 		isEmpty = false;
 	}
 	
+	public void setX(int x)
+	{
+		this.x = x;
+	}
+	
+	public int getX()
+	{
+		return x;
+	}
+	
+	public void setY(int y)
+	{
+		this.y = y;
+	}
+	
+	public int getY()
+	{
+		return y;
+	}
+	
 	public String toString()
 	{
-		if(piece.getType().isEmpty())
+		if(piece == null)
 		{
 			return("[ ]");
 		}
