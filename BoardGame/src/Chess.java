@@ -15,7 +15,7 @@ public class Chess extends Game{
 	 * Moves piece into a new tile
 	 * @param piece desired piece to move
 	 * @param tile desired end location to move to
-	 * @return true if it sucessfully moved the piece and false if it did not
+	 * @return true if it successfully moved the piece and false if it did not
 	 */
 
 	
