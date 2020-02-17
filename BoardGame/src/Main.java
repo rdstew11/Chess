@@ -4,13 +4,15 @@ public class Main {
 	public static void main(String[] args)
 	{
 		Board test = new Board(5,5);
+		Team red = new Team("red");
+		Team blue = new Team("blue");
 		
-		Piece one = new Piece("1","red");
-		Piece two = new Piece("2" ,"red");
-		Piece three = new Piece("3","red");
-		Piece four = new Piece("4","red");
-		Piece five = new Piece("5", "red");
-		Piece x = new Piece("x", "red");
+		Piece one = new Piece("1",red);
+		Piece two = new Piece("2" ,blue);
+		Piece three = new Piece("3",red);
+		Piece four = new Piece("4",red);
+		Piece five = new Piece("5", red);
+		Piece x = new Piece("x", red);
 		test.getTile(0,0).setPiece(one);
 		test.getTile(4,4).setPiece(two);
 		test.getTile(2,2).setPiece(three);
