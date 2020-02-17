@@ -3,12 +3,12 @@ import java.util.ArrayList;
 public class Chess extends Game{
 
 	private Board board;
-	private int nRound;
+	private int roundNumber;
 	
 	public Chess()
 	{
 		board = new Board(10,10);
-		nRound = 0;
+		roundNumber= 0;
 	}
 	
 	/**
@@ -42,6 +42,11 @@ public class Chess extends Game{
 		return output;
 	}
 	
+	private void capture(Tile attacker, Tile victim)
+	{
+		capture(attacker.getPiece(), victim);
+	}
+	
 	private void capture(Piece attacker, Tile tile)
 	{
 		board.getDeadPieces().add(tile.getPiece());
@@ -63,7 +68,41 @@ public class Chess extends Game{
 		
 		return movements;
 	}
+	
+	public void movePieceFromTile(Tile tile) throws EmptyTileException
+	{
+		if(tile.getPiece() == null)
+		{
+			throw new EmptyTileException("There is no piece in this tile");
+		}
+		else {
+			ArrayList<Tile> moves = new ArrayList<>();
+			moves.addAll(getMovements(tile));
+		}
+	}
+	
+	public void movePiece(Tile start, Tile end)
+	{
+		if(end.getPiece() == null)
+		{
+			end.setPiece(start.getPiece());
+			end.removePiece();
+		}
+		else
+		{
+			capture(start, end);
+		}
+	}
 
+	public void setRoundNumber(int roundNumber)
+	{
+		this.roundNumber = roundNumber;
+	}
+	
+	public int getRoundNumber()
+	{
+		return roundNumber;
+	}
 	
 	
 	
