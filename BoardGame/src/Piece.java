@@ -2,14 +2,14 @@
 public class Piece {
 	protected String type = "";
 	protected String[] moveList;
-	protected String team;
+	protected Team team;
 	
 	/**
 	 * Creates a basic piece object
 	 * @param type what kind of piece it is (like a rook in chess).
 	 * @param color the team the piece belongs to 
 	 */
-	public Piece(String type, String team)
+	public Piece(String type, Team team)
 	{
 		this.type = type;
 		this.team = team;
@@ -20,12 +20,12 @@ public class Piece {
 		
 	}
 	
-	public String getTeam()
+	public Team getTeam()
 	{
 		return team;
 	}
 	
-	public void setTeam(String team)
+	public void setTeam(Team team)
 	{
 		this.team = team;
 	}

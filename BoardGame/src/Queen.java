@@ -1,7 +1,7 @@
 
 public class Queen extends Piece{
 
-	public Queen(String team)
+	public Queen(Team team)
 	{
 		super("queen", team);
 		this.moveList = new String[] {"r","c","d"};
