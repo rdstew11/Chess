@@ -1,8 +1,8 @@
 
 public class Piece {
-	private String type = "";
-	private String[] moveList;
-	private String team;
+	protected String type = "";
+	protected String[] moveList;
+	protected String team;
 	
 	/**
 	 * Creates a basic piece object
