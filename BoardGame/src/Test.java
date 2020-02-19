@@ -11,16 +11,18 @@ public class Test {
 		//Team red = new Team("red");
 		//Team blue = new Team("blue");
 		//testChessToString();
-		//testChessGetTile();
+		testChessGetTile();
 		//testChessCheckTileNames();	
 		//testChessGetTileGetTeam();
 		
-		
+		/**
 		Team white = new Team("white");
 		Team black = new Team("black");
 		Chess test = new Chess(white,black);
-		System.out.println(test.getBoard().getRow(0));
-		
+		System.out.println(test.getBoard().getE(test.getTile("a1")));
+		System.out.println(test.getTile("a8"));
+		System.out.println(test.getBoard().getW(test.getTile("a8")));
+		*/
 	}
 	
 	public static void testChessCheckTileNames()

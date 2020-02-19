@@ -156,14 +156,14 @@ public class Chess extends Game{
 		String charOne = name.substring(0,1);
 		String charTwo = name.substring(1,2);
 		int temp = Integer.parseInt(charTwo);
-		int y = temp - 1;
+		int x = temp - 1;
 		//-1 so if column name is incorrect it will not return anything
-		int x = -1;
+		int y = -1;
 		for(int i = 0; i < board.getX(); i++)
 		{
 			if(columnNames[i].equals(charOne))
 			{
-				x = i;
+				y = i;
 			}
 		}
 		
@@ -268,6 +268,7 @@ public class Chess extends Game{
 			else if(move.equals("castle"))
 			{
 				ArrayList<Tile> east = board.getE(tile);
+				ArrayList<Tile> west = board.getW(tile);
 			}
 			else
 			{
