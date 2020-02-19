@@ -240,10 +240,35 @@ public class Chess extends Game{
 		ArrayList<Tile> movements = new ArrayList<>();
 		Piece piece = tile.getPiece();
 		String[] moveList = piece.getMoveList();
+		int forward = tile.getPiece().getTeam().getForward();
+		int x = tile.getX();
+		int y = tile.getY();
 		
 		for(String move : moveList)
 		{
-			movements.addAll(board.getDirection(move,tile));
+			if(move.equals("f2"))
+			{
+				Tile temp = board.getTile(x, y + forward * 2);
+				movements.add(temp);
+				
+			}
+			else if(move.equals("d1"))
+			{
+				Tile temp1 = board.getTile(x + 1, y + forward);
+				Tile temp2 = board.getTile(x - 1, y + forward);
+				
+				if(!temp1.isEmpty())
+				{
+					movements.add(temp1);
+				}
+				if(!temp2.isEmpty()) {
+					movements.add(temp1);
+				}
+			}
+			else
+			{
+				movements.addAll(board.getDirection(move,tile));
+			}
 		}
 
 		return movements;
