@@ -7,4 +7,10 @@ public class King extends Piece{
 		this.moveList = new String[]{"a", "castle"};
 		this.identifier = team.getIdentity().substring(0,1) + "K";
 	}
+	
+	public void setHasMoved(boolean hasMoved)
+	{
+		this.hasMoved = hasMoved;
+		this.moveList = new String[] {"a"};
+	}
 }
