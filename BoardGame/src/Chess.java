@@ -305,6 +305,7 @@ public class Chess extends Game{
 	
 	private void movePieceFromTo(Tile start, Tile end)
 	{
+		start.getPiece().setHasMoved(true);
 		if(end.isEmpty())
 		{
 			end.setPiece(start.getPiece());
