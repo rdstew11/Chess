@@ -1,4 +1,4 @@
-//import java.util.Arrays;
+import java.util.Arrays;
 
 public class Test {
 	
@@ -15,7 +15,7 @@ public class Test {
 		//testChessCheckTileNames();	
 		//testChessGetTileGetTeam();
 		
-		/**
+		
 		Team white = new Team("white");
 		Team black = new Team("black");
 		Chess test = new Chess(white,black);
@@ -25,8 +25,7 @@ public class Test {
 		System.out.println(test.getTile("d4"));
 		System.out.println(Arrays.toString(bishop.getMoveList()));
 		System.out.println(test.getMovements(test.getTile("d4")));
-		*/
-		
+		System.out.println(test.getTrimmedMovements(test.getTile("d4")));
 		
 	}
 	

@@ -237,7 +237,7 @@ public class Chess extends Game{
 		
 		for(String move : moveList)
 		{
-			board.getDirection(move,tile);
+			movements.addAll(board.getDirection(move,tile));
 		}
 
 		return movements;
