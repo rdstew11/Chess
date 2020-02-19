@@ -179,6 +179,8 @@ public class Board {
 	public ArrayList<Tile> getDirection(String dir, Tile tile)
 	{
 		ArrayList<Tile> direction = new ArrayList<>();
+		int x = tile.getX();
+		int y = tile.getY();
 		dir = dir.toLowerCase();
 		
 		if(dir.equals("n")) 
@@ -216,6 +218,20 @@ public class Board {
 		else if(dir.equals("d"))
 		{
 			direction.addAll(getDiagonals(tile));
+		}
+		else if(dir.equals("f1"))
+		{
+			if(!tile.isEmpty()) 
+			{
+				if(tile.getPiece().getTeam().getForward() > 0)
+				{
+					direction.add(getN(tile).get(0));
+				}
+				else if(tile.getPiece().getTeam().getForward() < 0)
+				{
+					direction.add(getS(tile).get(0));
+				}
+			}
 		}
 		
 		return direction;

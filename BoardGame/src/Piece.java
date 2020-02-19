@@ -4,6 +4,7 @@ public class Piece {
 	protected String[] moveList;
 	protected Team team;
 	protected String identifier;
+	protected boolean hasMoved;
 	
 	/**
 	 * Creates a basic piece object
@@ -15,11 +16,12 @@ public class Piece {
 		this.type = type;
 		this.team = team;
 		this.identifier = team.getIdentity().substring(0,1) + type.substring(0,1);
+		hasMoved = false;
 	}
 	
 	public Piece()
 	{
-		
+		hasMoved = false;
 	}
 	
 	public Team getTeam()
@@ -65,6 +67,21 @@ public class Piece {
 	public String getIdentifier()
 	{
 		return identifier;
+	}
+	
+	public boolean getHasMoved()
+	{
+		return hasMoved;
+	}
+	
+	public boolean checkHasMoved()
+	{
+		return hasMoved;
+	}
+	
+	public void setHasMoved(boolean hasMoved)
+	{
+		this.hasMoved = hasMoved;
 	}
 	
 }
