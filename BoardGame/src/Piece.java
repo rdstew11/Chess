@@ -3,6 +3,7 @@ public class Piece {
 	protected String type = "";
 	protected String[] moveList;
 	protected Team team;
+	protected String identifier;
 	
 	/**
 	 * Creates a basic piece object
@@ -13,6 +14,7 @@ public class Piece {
 	{
 		this.type = type;
 		this.team = team;
+		this.identifier = team.getIdentity().substring(0,1) + type.substring(0,1);
 	}
 	
 	public Piece()
@@ -50,5 +52,19 @@ public class Piece {
 		this.moveList = moveList;
 	}
 	
+	public String toString()
+	{
+		return type;
+	}
+	
+	public void setIdentifier(String identity)
+	{
+		identifier = identity;
+	}
+	
+	public String getIdentifier()
+	{
+		return identifier;
+	}
 	
 }

@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 public class Board {
 	private ArrayList<Tile> board = new ArrayList<Tile>();
-	private ArrayList<Piece> deadPieces = new ArrayList<>();
-	private ArrayList<Piece> alivePieces = new ArrayList<>();
 	private int col;
 	private int row;
 	private int stride;
@@ -20,6 +18,15 @@ public class Board {
 		this.col = col; //also the number of elements in each row
 		this.row = row; //the number of rows in board
 		stride = col;
+		freshBoard();
+	}
+	
+	/**
+	 * Creates a fresh board with empty tile pieces
+	 * Automatically done when a new board is constructed
+	 */
+	public void freshBoard()
+	{
 		for(int i = 0; i < this.row; i++)
 		{
 			for(int j = 0; j < this.col; j++)
@@ -266,21 +273,37 @@ public class Board {
 		return board;
 	}
 	
-	public ArrayList<Piece> getDeadPieces()
+	public int getX()
 	{
-		return deadPieces;
+		return col;
 	}
 	
+	public int getY()
+	{
+		return row;
+	}
+	
+	public int getStride()
+	{
+		return stride;
+	}
+	
+	public String rowToString(int y)
+	{
+		String output = "";
+		for(int i = 0; i < col; i++)
+		{
+			output = output + getTile(i,y);
+		}
+		
+		return output;
+	}
 	public String toString()
 	{
 		String out = "";
 		for(int i = row - 1; i >= 0; i--)
 		{
-			for(int j = 0; j < col; j++)
-			{
-				out = out +	getTile(j,i);
-			}
-			out = out + "\n";
+			out = out + rowToString(i) + "\n";
 		}
 		return out;
 	}

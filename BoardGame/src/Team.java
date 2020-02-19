@@ -34,4 +34,9 @@ public class Team {
 	{
 		wins++;
 	}
+	
+	public String toString()
+	{
+		return identity;
+	}
 }

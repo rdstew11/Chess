@@ -4,6 +4,7 @@ public class Tile {
 	private boolean isEmpty;
 	private int x;
 	private int y;
+	private String name;
 	/**
 	 * Constructs a tile object which contains the given piece
 	 * @param piece the piece in which the tile should contain
@@ -31,7 +32,7 @@ public class Tile {
 		return piece;
 	}
 	
-	public boolean checkEmpty() 
+	public boolean isEmpty() 
 	{
 		return isEmpty;
 	}
@@ -62,15 +63,25 @@ public class Tile {
 		return y;
 	}
 	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
+	
 	public String toString()
 	{
 		if(piece == null)
 		{
-			return("[ ]");
+			return("[  ]");
 		}
 		else
 		{
-			return("[" + piece.getType().substring(0,1) + "]");
+			return("[" + piece.getIdentifier() + "]");
 		}
 	}
 }

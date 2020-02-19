@@ -5,5 +5,6 @@ public class King extends Piece{
 	{
 		super("king",team);
 		this.moveList = new String[]{"a", "castle"};
+		this.identifier = team.getIdentity().substring(0,1) + "K";
 	}
 }
