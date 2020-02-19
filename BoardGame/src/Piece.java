@@ -83,5 +83,4 @@ public class Piece {
 	{
 		this.hasMoved = hasMoved;
 	}
-	
 }
