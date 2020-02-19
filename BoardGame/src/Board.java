@@ -219,7 +219,7 @@ public class Board {
 		{
 			direction.addAll(getDiagonals(tile));
 		}
-		else if(dir.equals("f1"))
+		else if(dir.equals("f"))
 		{
 			if(!tile.isEmpty()) 
 			{
