@@ -57,11 +57,13 @@ public class Board {
 		int x = tile.getX();
 		int y = tile.getY();
 		ArrayList<Tile> ne = new ArrayList<Tile>();
+		x++;
+		y++;
 		while(checkInbounds(x,y))
 		{
+			ne.add(getTile(x,y));
 			x++;
 			y++;
-			ne.add(getTile(x,y));
 		}
 		return(ne);
 	}
@@ -71,11 +73,13 @@ public class Board {
 		int x = tile.getX();
 		int y = tile.getY();
 		ArrayList<Tile> nw = new ArrayList<Tile>();
+		x--;
+		y++;
 		while(checkInbounds(x,y))
 		{
+			nw.add(getTile(x,y));
 			x--;
 			y++;
-			nw.add(getTile(x,y));
 		}
 		return nw;
 	}
@@ -85,11 +89,13 @@ public class Board {
 		int x = tile.getX();
 		int y = tile.getY();
 		ArrayList<Tile> se = new ArrayList<Tile>();
+		x++;
+		y--;
 		while(checkInbounds(x,y))
 		{
+			se.add(getTile(x,y));
 			x++;
 			y--;
-			se.add(getTile(x,y));
 		}
 		return se;
 	}
@@ -99,11 +105,13 @@ public class Board {
 		int x = tile.getX();
 		int y = tile.getY();
 		ArrayList<Tile> sw = new ArrayList<Tile>();
+		x--;
+		y--;
 		while(checkInbounds(x,y))
 		{
+			sw.add(getTile(x,y));
 			x--;
 			y--;
-			sw.add(getTile(x,y));
 		}
 		return sw;
 	}
@@ -123,10 +131,11 @@ public class Board {
 		int x = tile.getX();
 		int y = tile.getY();
 		ArrayList<Tile> n = new ArrayList<>();
+		y++;
 		while(checkInbounds(x,y))
 		{
-			y++;
 			n.add(getTile(x,y));
+			y++;
 		}
 		return n;
 	}
@@ -136,10 +145,11 @@ public class Board {
 		int x = tile.getX();
 		int y = tile.getY();
 		ArrayList<Tile> s = new ArrayList<>();
+		y--;
 		while(checkInbounds(x,y))
 		{
-			y--;
 			s.add(getTile(x,y));
+			y--;
 		}
 		return s;
 	}
@@ -149,10 +159,11 @@ public class Board {
 		int x = tile.getX();
 		int y = tile.getY();
 		ArrayList<Tile> e = new ArrayList<>();
+		x++;
 		while(checkInbounds(x,y))
 		{
-			x++;
 			e.add(getTile(x,y));
+			x++;
 		}
 		return e;
 	}
@@ -162,10 +173,11 @@ public class Board {
 		int x = tile.getX();
 		int y = tile.getY();
 		ArrayList<Tile> w = new ArrayList<>();
+		x--;
 		while(checkInbounds(x,y))
 		{
-			x--;
 			w.add(getTile(x,y));
+			x--;
 		}
 		return w;
 	}

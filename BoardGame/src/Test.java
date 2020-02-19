@@ -20,8 +20,10 @@ public class Test {
 		Team black = new Team("black");
 		Chess test = new Chess(white,black);
 		System.out.println(test.getBoard().getE(test.getTile("a1")));
+		System.out.println(test.getBoard().getNE(test.getTile("a1")));
 		System.out.println(test.getTile("a8"));
 		System.out.println(test.getBoard().getW(test.getTile("a8")));
+		System.out.println(test.getBoard().getNW(test.getTile("a8")));
 		
 	}
 	
