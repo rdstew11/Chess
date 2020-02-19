@@ -17,6 +17,9 @@ public class Chess extends Game{
 		roundNumber= 0;
 		this.white = white;
 		this.black = black;
+		//forward 1 for positive y and -1 for negative y
+		this.white.setForward(1);
+		this.black.setForward(-1);
 		newBoard();
 	}
 	
@@ -26,6 +29,9 @@ public class Chess extends Game{
 		roundNumber = 0;
 		white = new Team("white");
 		black = new Team("black");
+		//1 for forward direction being positive y and -1 for forward direction being negative y
+		this.white.setForward(1);
+		this.white.setForward(-1);
 		newBoard();
 	}
 	

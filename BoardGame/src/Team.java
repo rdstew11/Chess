@@ -3,6 +3,7 @@ public class Team {
 
 	private String identity;
 	private int wins;
+	private int forward;
 	
 	public Team(String identifier)
 	{
@@ -33,6 +34,23 @@ public class Team {
 	public void addWin() 
 	{
 		wins++;
+	}
+	
+	public void setForward(int i)
+	{
+		if(i > 0)
+		{
+			forward = 1;
+		}
+		else if(i < 0)
+		{
+			forward = -1;
+		}
+	}
+	
+	public int getForward()
+	{
+		return forward;
 	}
 	
 	public String toString()
