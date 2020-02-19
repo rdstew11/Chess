@@ -125,8 +125,8 @@ public class Board {
 		ArrayList<Tile> n = new ArrayList<>();
 		while(checkInbounds(x,y))
 		{
-			n.add(getTile(x,y));
 			y++;
+			n.add(getTile(x,y));
 		}
 		return n;
 	}
@@ -138,8 +138,8 @@ public class Board {
 		ArrayList<Tile> s = new ArrayList<>();
 		while(checkInbounds(x,y))
 		{
-			s.add(getTile(x,y));
 			y--;
+			s.add(getTile(x,y));
 		}
 		return s;
 	}
@@ -151,8 +151,8 @@ public class Board {
 		ArrayList<Tile> e = new ArrayList<>();
 		while(checkInbounds(x,y))
 		{
-			e.add(getTile(x,y));
 			x++;
+			e.add(getTile(x,y));
 		}
 		return e;
 	}
@@ -164,8 +164,8 @@ public class Board {
 		ArrayList<Tile> w = new ArrayList<>();
 		while(checkInbounds(x,y))
 		{
-			w.add(getTile(x,y));
 			x--;
+			w.add(getTile(x,y));
 		}
 		return w;
 	}
