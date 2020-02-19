@@ -52,7 +52,7 @@ public class Board {
 		}
 	}
 	
-	private ArrayList<Tile> getNE(Tile tile)
+	public ArrayList<Tile> getNE(Tile tile)
 	{
 		int x = tile.getX();
 		int y = tile.getY();
@@ -66,7 +66,7 @@ public class Board {
 		return(ne);
 	}
 	
-	private ArrayList<Tile> getNW(Tile tile)
+	public ArrayList<Tile> getNW(Tile tile)
 	{
 		int x = tile.getX();
 		int y = tile.getY();
@@ -80,7 +80,7 @@ public class Board {
 		return nw;
 	}
 	
-	private ArrayList<Tile> getSE(Tile tile)
+	public ArrayList<Tile> getSE(Tile tile)
 	{
 		int x = tile.getX();
 		int y = tile.getY();
@@ -94,7 +94,7 @@ public class Board {
 		return se;
 	}
 	
-	private ArrayList<Tile> getSW(Tile tile)
+	public ArrayList<Tile> getSW(Tile tile)
 	{
 		int x = tile.getX();
 		int y = tile.getY();
@@ -108,7 +108,7 @@ public class Board {
 		return sw;
 	}
 	
-	private ArrayList<Tile> getDiagonals(Tile tile)
+	public ArrayList<Tile> getDiagonals(Tile tile)
 	{
 		ArrayList<Tile> diagonals = new ArrayList<Tile>();
 		diagonals.addAll(getNE(tile));
@@ -118,7 +118,7 @@ public class Board {
 		return diagonals;
 	}
 	
-	private ArrayList<Tile> getN(Tile tile)
+	public ArrayList<Tile> getN(Tile tile)
 	{
 		int x = tile.getX();
 		int y = tile.getY();
@@ -131,7 +131,7 @@ public class Board {
 		return n;
 	}
 	
-	private ArrayList<Tile> getS(Tile tile)
+	public ArrayList<Tile> getS(Tile tile)
 	{
 		int x = tile.getX();
 		int y = tile.getY();
@@ -144,7 +144,7 @@ public class Board {
 		return s;
 	}
 	
-	private ArrayList<Tile> getE(Tile tile)
+	public ArrayList<Tile> getE(Tile tile)
 	{
 		int x = tile.getX();
 		int y = tile.getY();
@@ -157,7 +157,7 @@ public class Board {
 		return e;
 	}
 	
-	private ArrayList<Tile> getW(Tile tile)
+	public ArrayList<Tile> getW(Tile tile)
 	{
 		int x = tile.getX();
 		int y = tile.getY();

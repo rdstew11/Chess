@@ -265,6 +265,10 @@ public class Chess extends Game{
 					movements.add(temp1);
 				}
 			}
+			else if(move.equals("castle"))
+			{
+				ArrayList<Tile> east = board.getE(tile);
+			}
 			else
 			{
 				movements.addAll(board.getDirection(move,tile));

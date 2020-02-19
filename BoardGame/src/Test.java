@@ -19,13 +19,7 @@ public class Test {
 		Team white = new Team("white");
 		Team black = new Team("black");
 		Chess test = new Chess(white,black);
-		test.emptyBoard();
-		Bishop bishop = new Bishop(white);
-		test.getTile("d4").setPiece(bishop);
-		System.out.println(test.getTile("d4"));
-		System.out.println(Arrays.toString(bishop.getMoveList()));
-		System.out.println(test.getMovements(test.getTile("d4")));
-		System.out.println(test.getTrimmedMovements(test.getTile("d4")));
+		System.out.println(test.getBoard().getRow(0));
 		
 	}
 	
