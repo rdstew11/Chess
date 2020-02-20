@@ -380,17 +380,22 @@ public class Chess extends Game{
 			}
 			//pawn attack
 			else if(move.equals("pa"))
-			{
-				Tile temp1 = board.getTile(x + 1, y + forward);
-				Tile temp2 = board.getTile(x - 1, y + forward);
-				
-				if(!temp1.isEmpty())
+			{				
+				if(board.checkInbounds(x + 1, y + forward))
 				{
-					movements.add(temp1);
+					Tile temp = board.getTile(x + 1, y + forward);
+					if(!temp.isEmpty())
+					{
+						movements.add(temp);
+					}
 				}
-				if(!temp2.isEmpty()) 
+				if(board.checkInbounds(x - 1, y + forward))
 				{
-					movements.add(temp1);
+					Tile temp = board.getTile(x - 1, y + forward);
+					if(!temp.isEmpty()) 
+					{
+						movements.add(temp);
+					}
 				}
 			}
 			else if(move.equals("castle"))
@@ -431,6 +436,42 @@ public class Chess extends Game{
 				movements.addAll(removeJumps(north,tile));
 				movements.addAll(removeJumps(south,tile));
 				
+			}
+			else if(move.equals("L"))
+			{
+				/**
+				 * move: [ ][X][ ][X][ ]
+				 * 		 [X][ ][ ][ ][X]
+				 * 		 [ ][ ][P][ ][ ]
+				 * 		 [X][ ][ ][ ][X]
+				 * 		 [ ][X][ ][X][ ]
+				 * 
+				 * X:	 [  ][-1][  ][+1][  ]
+				 *Start->[-2][  ][  ][  ][+2]
+				 * 		 [  ][  ][XX][  ][  ]
+				 * 		 [-2][  ][  ][  ][+2]
+				 * 		 [  ][-1][  ][+1][  ]
+				 * 
+				 * Y:	 [  ][+2][  ][+2][  ]
+				 *Start->[+1][  ][  ][  ][+1]
+				 * 		 [  ][  ][XX][  ][  ]
+				 * 		 [-1][  ][  ][  ][-1]
+				 * 		 [  ][-2][  ][-2][  ]
+				 */
+				
+				int[] xIncrement = new int[] {-2,-1,1,2,2,1,-1,-2};
+				int[] yIncrement = new int[] {1,2,2,1,-1,-2,-2,-1};
+				
+				for(int i = 0; i < 8; i++)
+				{
+					int newX = x + xIncrement[i];
+					int newY = y + yIncrement[i];
+					if(board.checkInbounds(newX,newY))
+					{
+						Tile temp = board.getTile(newX,newY);
+						movements.add(temp);
+					}
+				}
 			}
 			//general directions from board class
 			else
