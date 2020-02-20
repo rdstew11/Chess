@@ -14,13 +14,14 @@ public class Test {
 		//testChessGetTile();
 		//testChessCheckTileNames();	
 		//testChessGetTileGetTeam();
-		//testCastling();
+		testCastling();
 		//testGetRow();
-		testGame();
+		//testGame();
 		//testGetCol();
 		//testGetS();
 		//testGetN();
 		//testGetE();
+		//testBishop();
 	}
 	
 	public static void testGetW()
@@ -31,6 +32,39 @@ public class Test {
 		{
 			
 		}
+	}
+	
+	public static void testBishop()
+	{
+		Team white = new Team("white");
+		Team black = new Team("black");
+		Chess test = new Chess(white,black);
+		test.emptyBoard();
+		Bishop bishop = new Bishop(white);
+		Pawn bp1 = new Pawn(black);
+		Pawn bp2 = new Pawn(black);
+		Pawn bp3 = new Pawn(black);
+		Pawn bp4 = new Pawn(black);
+		Pawn wp1 = new Pawn(white);
+		Pawn wp2 = new Pawn(white);
+		Pawn wp3 = new Pawn(white);
+		Pawn wp4 = new Pawn(white);
+		
+		while(true)
+		{
+			test.getTile("d4").setPiece(bishop);
+			test.getTile("d5").setPiece(wp1);
+			test.getTile("d3").setPiece(wp2);
+			test.getTile("e4").setPiece(wp3);
+			test.getTile("c4").setPiece(wp4);
+			
+			test.getTile("a7").setPiece(bp1);
+			test.getTile("h8").setPiece(bp2);
+			test.getTile("g1").setPiece(bp3);
+			test.getTile("a1").setPiece(bp4);
+			test.movePiece(white);
+		}
+		
 	}
 	
 	public static void testGetE()
@@ -114,11 +148,8 @@ public class Test {
 		test.getTile("e8").setPiece(bKing);
 		test.getTile("h8").setPiece(bRook2);
 		test.getTile("a8").setPiece(bRook1);
-		System.out.println(test);
 		test.movePiece(white);
-		System.out.println(test);
 		test.movePiece(black);
-		System.out.println(test);
 	}
 	
 	public static void testChessCheckTileNames()

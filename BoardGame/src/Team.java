@@ -48,7 +48,6 @@ public class Team {
 		}
 		boolean one = i < 0;
 		boolean two = i > 0;
-		System.out.println("Forward for " + toString() + " set to " + forward + " by int " + i + " i < 0 = " + one + "i > 0 = " + two);
 	}
 	
 	public int getForward()

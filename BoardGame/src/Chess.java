@@ -47,7 +47,11 @@ public class Chess extends Game{
 	public void newGame()
 	{
 		newBoard();
+		play();
+	}
 	
+	public void play()
+	{
 		boolean win = false;
 		while(!win)
 		{
@@ -67,14 +71,8 @@ public class Chess extends Game{
 	{
 		boolean win = false;
 		roundNumber++;
-		System.out.println("\t\tRound: " + roundNumber);
-		System.out.println(toString());
 		movePiece(white);
-		System.out.println("\t\tRound: " + roundNumber);
-		System.out.println(toString());
 		movePiece(black);
-		System.out.println("\t\tRound: " + roundNumber);
-		System.out.println(toString());
 		return win;
 	}
 
@@ -82,16 +80,17 @@ public class Chess extends Game{
 	 * Prompts team to select tile to move from and then what tile to move it to
 	 * @param team Team that will be making the move
 	 */
+	
 	public void movePiece(Team team)
 	{
 		Scanner in = new Scanner(System.in);
 		Tile start = null;
 		Tile end = null;
-		System.out.println(team + " make your move:\n");
+		System.out.println(toString());
 		boolean done = false;
 		while(!done)
 		{
-			System.out.print("Enter tile to move piece from: ");
+			System.out.print("[" + team + "] enter tile to move piece from: ");
 			String input = in.nextLine();
 			if(checkTileName(input))
 			{
@@ -237,7 +236,7 @@ public class Chess extends Game{
 		int y = temp - 1;
 		//-1 so if column name is incorrect it will not return anything
 		int x = -1;
-		// i = y coord
+		// i = y coordinate
 		for(int i = 0; i < board.getX(); i++)
 		{
 			if(columnNames[i].equals(charOne))
@@ -263,12 +262,12 @@ public class Chess extends Game{
 	}
 	
 	/**
-	 * Takes an ArrayList of movements and trims them to possible movements for piece in given tile
+	 * Takes an ArrayList of movements and eliminates any tiles that contain alike teams
 	 * @param movements a list of tiles 
 	 * @param tile tile containing piece that should be moving
 	 * @return an ArrayList of tiles that the piece within in the given tile can possible move to
 	 */
-	private ArrayList<Tile> trimMovements(ArrayList<Tile> movements, Tile tile)
+	private ArrayList<Tile> removeLikeTeams(ArrayList<Tile> movements, Tile tile)
 	{
 		ArrayList<Tile> output = new ArrayList<>();
 		Piece piece = tile.getPiece();
@@ -278,7 +277,11 @@ public class Chess extends Game{
 			{
 				output.add(tempTile);
 			}
-			else if(!tempTile.getPiece().getTeam().equals(piece.getTeam()))
+			else if(tempTile.getPiece().getTeam() != piece.getTeam())
+			{
+				output.add(tempTile);
+			}
+			else if(tempTile.getPiece().getTeam() == piece.getTeam() && checkCastle(tile,tempTile))
 			{
 				output.add(tempTile);
 			}
@@ -473,13 +476,21 @@ public class Chess extends Game{
 					}
 				}
 			}
-			//general directions from board class
-			else
+			else if(move.equals("d"))
 			{
-				movements.addAll(removeJumps(board.getDirection(move,tile),tile));
+				ArrayList<Tile> ne = board.getDirection("ne",tile);
+				ArrayList<Tile> nw = board.getDirection("nw",tile);
+				ArrayList<Tile> se = board.getDirection("se",tile);
+				ArrayList<Tile> sw= board.getDirection("sw",tile);
+				
+				movements.addAll(removeJumps(ne,tile));
+				movements.addAll(removeJumps(nw,tile));
+				movements.addAll(removeJumps(se,tile));
+				movements.addAll(removeJumps(sw,tile));
+				
 			}
 		}
-		movements = trimMovements(movements, tile);
+		movements = removeLikeTeams(movements, tile);
 		return movements;
 	}
 	
@@ -503,6 +514,7 @@ public class Chess extends Game{
 			else if(tile.getPiece().getTeam() != piece.getTeam())
 			{
 				noJumps.add(tile);
+				break;
 			}
 			else
 			{
@@ -635,7 +647,7 @@ public class Chess extends Game{
 	
 	public String toString()
 	{
-		String output = "";
+		String output = "\t    Round: " + roundNumber + "\n";
 		
 		for(int i = board.getY() - 1; i >= 0; i --)
 		{
