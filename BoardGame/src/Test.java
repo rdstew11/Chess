@@ -14,17 +14,111 @@ public class Test {
 		//testChessGetTile();
 		//testChessCheckTileNames();	
 		//testChessGetTileGetTeam();
-		
-		
+		//testCastling();
+		//testGetRow();
+		testGame();
+		//testGetCol();
+		//testGetS();
+		//testGetN();
+		//testGetE();
+	}
+	
+	public static void testGetW()
+	{
+		String[] letters = new String[] {"a","b","c","d","e","f","g","h","i","j"};
+		Chess test = new Chess();
+		for(int i = 0; i < test.getBoard().getY(); i++)
+		{
+			
+		}
+	}
+	
+	public static void testGetE()
+	{
+		String[] letters = new String[] {"a","b","c","d","e","f","g","h","i","j"};
+		Chess test = new Chess();
+		for(int i = 0; i < test.getBoard().getY(); i++)
+		{
+			for(int j = 0; j < test.getBoard().getX(); j++)
+			{
+				int row = i + 1;
+				Tile temp = test.getTile(letters[j]+row);
+				System.out.println("Test for tile " + temp.getName());
+				System.out.println(test.getBoard().getE(temp));
+			}
+		}
+	}
+	public static void testGetS()
+	{
+		String[] letters = new String[] {"a","b","c","d","e","f","g","h","i","j"};
+		Chess test = new Chess();
+		for(int i = 0; i < test.getBoard().getY(); i++)
+		{
+			for(int j = 0; j < test.getBoard().getX(); j++)
+			{
+				int row = i + 1;
+				Tile temp = test.getTile(letters[i]+row);
+				System.out.println("Testing for " + temp);
+				System.out.println(test.getBoard().getS(temp));
+			}
+		}
+	}
+	
+	public static void testGetN()
+	{
+		String[] letters = new String[] {"a","b","c","d","e","f","g","h","i","j"};
+		Chess test = new Chess();
+		for(int i = 0; i < test.getBoard().getY(); i++)
+		{
+			for(int j = 0; j < test.getBoard().getX(); j++)
+			{
+				int row = i + 1;
+				Tile temp = test.getTile(letters[j] + row);
+				System.out.println("testing for " + temp);
+				System.out.println(test.getBoard().getN(temp));
+			}
+		}
+	}
+	
+	public static void testGetCol()
+	{
+		Chess test = new Chess();
+		for(int i = 0; i < test.getBoard().getX(); i++)
+		{
+			System.out.println(test.getBoard().getColumn(i));
+		}
+	}
+	
+	public static void testGame()
+	{
+		Chess test = new Chess();
+		test.newGame();
+	}
+	
+	public static void testCastling()
+	{
 		Team white = new Team("white");
 		Team black = new Team("black");
 		Chess test = new Chess(white,black);
-		System.out.println(test.getBoard().getE(test.getTile("a1")));
-		System.out.println(test.getBoard().getNE(test.getTile("a1")));
-		System.out.println(test.getTile("a8"));
-		System.out.println(test.getBoard().getW(test.getTile("a8")));
-		System.out.println(test.getBoard().getNW(test.getTile("a8")));
+		test.emptyBoard();
+		King wKing = new King(white);
+		Rook wRook1 = new Rook(white);
+		Rook wRook2 = new Rook(white);
+		test.getTile("e1").setPiece(wKing);
+		test.getTile("h1").setPiece(wRook2);
+		test.getTile("a1").setPiece(wRook1);
 		
+		King bKing = new King(black);
+		Rook bRook1 = new Rook(black);
+		Rook bRook2 = new Rook(black);
+		test.getTile("e8").setPiece(bKing);
+		test.getTile("h8").setPiece(bRook2);
+		test.getTile("a8").setPiece(bRook1);
+		System.out.println(test);
+		test.movePiece(white);
+		System.out.println(test);
+		test.movePiece(black);
+		System.out.println(test);
 	}
 	
 	public static void testChessCheckTileNames()
@@ -41,6 +135,15 @@ public class Test {
 				System.out.println(test.checkTileName(name));
 				System.out.println();
 			}
+		}
+	}
+	
+	public static void testGetRow()
+	{
+		Chess test = new Chess();
+		for(int i = test.getBoard().getX() - 1; i >= 0; i--)
+		{
+			System.out.println(test.getBoard().getRow(i));
 		}
 	}
 	

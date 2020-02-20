@@ -31,9 +31,7 @@ public class Board {
 		{
 			for(int j = 0; j < this.col; j++)
 			{
-				Tile t = new Tile();
-				t.setX(j);
-				t.setY(i);
+				Tile t = new Tile(j,i);
 				board.add(t);
 			}
 		}
@@ -191,9 +189,9 @@ public class Board {
 	public ArrayList<Tile> getDirection(String dir, Tile tile)
 	{
 		ArrayList<Tile> direction = new ArrayList<>();
+		dir = dir.toLowerCase();
 		int x = tile.getX();
 		int y = tile.getY();
-		dir = dir.toLowerCase();
 		
 		if(dir.equals("n")) 
 		{
@@ -237,11 +235,37 @@ public class Board {
 			{
 				if(tile.getPiece().getTeam().getForward() > 0)
 				{
-					direction.add(getN(tile).get(0));
+					direction.add(getTile(x,y+1));
 				}
 				else if(tile.getPiece().getTeam().getForward() < 0)
 				{
-					direction.add(getS(tile).get(0));
+					direction.add(getTile(x,y-1));
+				}
+			}
+		}
+		else if (dir.equals("a"))
+		{	
+			/* 		-1  0 +1
+			 * X	-1  P +1
+			 *		-1  0 +1
+			 *		
+			 *		+1 +1 +1
+			 *Y		 0  P  0
+			 *		-1 -1 -1
+			 */		 
+			
+			//starts at (-1,0)
+			int[] xIncrement = new int[] {-1,0,1,1,1,0,-1,-1};
+			int[] yIncrement = new int[] {0,1,1,1,0,-1,-1,-1};
+			
+			for(int i = 0; i < 8; i++)
+			{
+				int newX = x + xIncrement[i];
+				int newY = y + yIncrement[i];
+				if(checkInbounds(newX,newY))
+				{
+					Tile temp = getTile(newX,newY);
+					direction.add(temp);
 				}
 			}
 		}
@@ -259,11 +283,6 @@ public class Board {
 		{
 			return(false);
 		}
-	}
-	
-	public boolean checkInbounds(Tile tile)
-	{
-		return checkInbounds(tile.getX(), tile.getY());
 	}
 	
 	

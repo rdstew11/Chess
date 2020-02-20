@@ -9,16 +9,20 @@ public class Tile {
 	 * Constructs a tile object which contains the given piece
 	 * @param piece the piece in which the tile should contain
 	 */
-	public Tile(Piece piece)
+	public Tile(Piece piece, int x, int y)
 	{
 		this.piece = piece;
 		isEmpty = false;
+		this.x = x;
+		this.y = y;
 	}
 	
-	public Tile()
+	public Tile(int x, int y)
 	{
 		piece = null;
 		isEmpty = true;
+		this.x = x;
+		this.y = y;
 	}
 	
 	public void removePiece()

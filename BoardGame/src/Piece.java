@@ -5,6 +5,7 @@ public class Piece {
 	protected Team team;
 	protected String identifier;
 	protected boolean hasMoved;
+	protected int forward;
 	
 	/**
 	 * Creates a basic piece object
@@ -13,7 +14,7 @@ public class Piece {
 	 */
 	public Piece(String type, Team team)
 	{
-		this.type = type;
+		this.type = type.toLowerCase();
 		this.team = team;
 		this.identifier = team.getIdentity().substring(0,1) + type.substring(0,1);
 		hasMoved = false;
@@ -82,5 +83,15 @@ public class Piece {
 	public void setHasMoved(boolean hasMoved)
 	{
 		this.hasMoved = hasMoved;
+	}
+	
+	public int getForward()
+	{
+		return team.getForward();
+	}
+	
+	public void setForward(int i)
+	{
+		team.setForward(i);
 	}
 }

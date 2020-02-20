@@ -18,8 +18,8 @@ public class Chess extends Game{
 		this.white = white;
 		this.black = black;
 		//forward 1 for positive y and -1 for negative y
-		this.white.setForward(1);
 		this.black.setForward(-1);
+		this.white.setForward(1);
 		newBoard();
 	}
 	
@@ -30,8 +30,8 @@ public class Chess extends Game{
 		white = new Team("white");
 		black = new Team("black");
 		//1 for forward direction being positive y and -1 for forward direction being negative y
+		this.black.setForward(-1);
 		this.white.setForward(1);
-		this.white.setForward(-1);
 		newBoard();
 	}
 	
@@ -85,8 +85,8 @@ public class Chess extends Game{
 	public void movePiece(Team team)
 	{
 		Scanner in = new Scanner(System.in);
-		Tile start = new Tile();
-		Tile end = new Tile();
+		Tile start = null;
+		Tile end = null;
 		System.out.println(team + " make your move:\n");
 		boolean done = false;
 		while(!done)
@@ -102,6 +102,7 @@ public class Chess extends Game{
 					{
 						if(getMovements(start).isEmpty())
 						{
+							System.out.println(toString());
 							System.out.println("\nError: tile \'" + start.getName() + "\' does not have any valid moves available.\n");
 						}
 						else
@@ -111,11 +112,13 @@ public class Chess extends Game{
 					}
 					else
 					{
+						System.out.println(toString());
 						System.out.println("\nError: Piece in tile \'" + start.getName() + "\' is not on your team.\n");
 					}
 				}
 				else
 				{
+					System.out.println(toString());
 					System.out.println("\nError: Tile selected is empty.\n");
 				}
 			}
@@ -123,6 +126,7 @@ public class Chess extends Game{
 		
 		ArrayList<Tile> movements = getMovements(start);
 		done = false;
+		System.out.println(toString());
 		while(!done)
 		{
 			String input = "";
@@ -138,12 +142,84 @@ public class Chess extends Game{
 				}
 				else
 				{
+					System.out.println(toString());
 					System.out.println("\nError: Tile " + end.getName() + " is not a valid move\n");
 				}
 			}
 		}
 		
-		movePieceFromTo(start,end);	
+		if(checkCastle(start,end))
+		{
+			castle(start,end);
+		}
+		else 
+		{
+			movePieceFromTo(start,end);
+		}
+	}
+	
+	public boolean checkCastle(Tile one, Tile two)
+	{
+		ArrayList<Tile> east = board.getE(one);
+		ArrayList<Tile> west = board.getW(one);
+		
+		if(one == two)
+		{
+			return false;
+		}
+		
+		boolean oneHasCastle = false;
+		boolean twoHasCastle = false;
+		if(!one.isEmpty() && !two.isEmpty())
+		{
+			for(String move : one.getPiece().getMoveList())
+			{
+				if(move.equals("castle"))
+				{
+					oneHasCastle = true;
+				}
+			}
+			
+			for(String move : two.getPiece().getMoveList())
+			{
+				if(move.equals("castle"))
+				{
+					twoHasCastle = true;
+				}
+			}
+		}
+		if(oneHasCastle && twoHasCastle)
+		{
+			for(Tile tile : east)
+			{
+				if(!tile.isEmpty())
+				{
+					if(tile == two)
+					{
+						return true;
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+			for(Tile tile : west)
+			{
+				if(!tile.isEmpty())
+				{
+					if(tile == two)
+					{
+						return true;
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -151,19 +227,22 @@ public class Chess extends Game{
 	 * @param name name of tile (ex. a4)
 	 * @return Tile object with given name
 	 */
-	public Tile getTile(String name)
+	public Tile getTile (String name)
 	{
+		//identifies x
 		String charOne = name.substring(0,1);
+		//identifies y
 		String charTwo = name.substring(1,2);
 		int temp = Integer.parseInt(charTwo);
-		int x = temp - 1;
+		int y = temp - 1;
 		//-1 so if column name is incorrect it will not return anything
-		int y = -1;
+		int x = -1;
+		// i = y coord
 		for(int i = 0; i < board.getX(); i++)
 		{
 			if(columnNames[i].equals(charOne))
 			{
-				y = i;
+				x = i;
 			}
 		}
 		
@@ -176,8 +255,9 @@ public class Chess extends Game{
 		{
 			for(int j = 0; j < board.getX(); j++)
 			{
-				int row = i + 1;
-				board.getTile(j,i).setName(columnNames[j]+row);
+				int y = i + 1;
+				String x = columnNames[j];
+				board.getTile(j,i).setName(x+y);
 			}
 		}
 	}
@@ -190,27 +270,17 @@ public class Chess extends Game{
 	 */
 	private ArrayList<Tile> trimMovements(ArrayList<Tile> movements, Tile tile)
 	{
-		return trimMovements(movements, tile.getPiece());
-	}
-	
-	/**
-	 * Takes an ArrayList of movements and trims them to possible movements for piece in given tile
-	 * @param movements a list of tiles 
-	 * @param piece that should be moving
-	 * @return an ArrayList of tiles that the piece within in the given tile can possible move to
-	 */
-	private ArrayList<Tile> trimMovements (ArrayList<Tile> movements, Piece piece)
-	{
 		ArrayList<Tile> output = new ArrayList<>();
-		for(Tile tile : movements)
+		Piece piece = tile.getPiece();
+		for(Tile tempTile : movements)
 		{
-			if(tile.isEmpty()) 
+			if(tempTile.isEmpty()) 
 			{
-				output.add(tile);
+				output.add(tempTile);
 			}
 			else if(!tile.getPiece().getTeam().equals(piece.getTeam()))
 			{
-				output.add(tile);
+				output.add(tempTile);
 			}
 		}
 		
@@ -229,6 +299,59 @@ public class Chess extends Game{
 		attacker.removePiece();
 	}
 	
+	public void castle(Tile one, Tile two)
+	{
+		Tile kingTile = null;
+		Tile rookTile = null;
+		
+		//identify which tile holds king and which holds rook
+		if(one.getPiece().getType().equals("king") && two.getPiece().getType().equals("rook"))
+		{
+			kingTile = one;
+			rookTile = two;
+		}
+		else if(one.getPiece().getType().equals("rook") && two.getPiece().getType().equals("king"))
+		{
+			kingTile = two;
+			rookTile = one;
+		}
+		
+		Piece king = kingTile.getPiece();
+		Piece rook = rookTile.getPiece();
+		int kingX = kingTile.getX();
+		int rookX = rookTile.getX();
+		int y = kingTile.getY();
+		String dir = "";
+		
+		if(rookX > kingX)
+		{
+			dir = "east";
+		}
+		else if(rookX < kingX)
+		{
+			dir = "west";
+		}
+		
+		dir = dir.toLowerCase();
+		int x = 0;
+		if(dir.equals("east"))
+		{
+			x = 1;
+		}
+		else if(dir.equals("west"))
+		{
+			x = -1;
+		}
+		
+
+		Tile kingNewTile = board.getTile(kingX + 2 * x, y);
+		Tile rookNewTile = board.getTile(kingNewTile.getX() - x, y);
+		kingNewTile.setPiece(king);
+		kingTile.removePiece();
+		rookNewTile.setPiece(rook);
+		rookTile.removePiece();
+		
+	}
 	
 	/**
 	 * Takes a tile with a piece in it and returns an ArrayList of all possible moves for that piece
@@ -240,19 +363,23 @@ public class Chess extends Game{
 		ArrayList<Tile> movements = new ArrayList<>();
 		Piece piece = tile.getPiece();
 		String[] moveList = piece.getMoveList();
-		int forward = tile.getPiece().getTeam().getForward();
+		int forward = piece.getTeam().getForward();
 		int x = tile.getX();
 		int y = tile.getY();
 		
 		for(String move : moveList)
 		{
-			if(move.equals("f2"))
+			//pawn forward 2
+			if(move.equals("pf2"))
 			{
-				Tile temp = board.getTile(x, y + forward * 2);
-				movements.add(temp);
-				
+				if(board.getTile(x,y + forward).isEmpty())
+				{
+					Tile temp = board.getTile(x, y + forward * 2);
+					movements.add(temp);
+				}
 			}
-			else if(move.equals("d1"))
+			//pawn attack
+			else if(move.equals("pa"))
 			{
 				Tile temp1 = board.getTile(x + 1, y + forward);
 				Tile temp2 = board.getTile(x - 1, y + forward);
@@ -267,23 +394,81 @@ public class Chess extends Game{
 			}
 			else if(move.equals("castle"))
 			{
-				ArrayList<Tile> east = board.getE(tile);
-				ArrayList<Tile> west = board.getW(tile);
+				ArrayList<Tile> row = board.getRow(y);
+				for(Tile tempTile : row)
+				{
+					if(checkCastle(tile,tempTile))
+					{
+						movements.add(tempTile);
+					}
+				}
 			}
-			else
+			//pawn forward
+			else if(move.equals("pf"))
+			{
+				Tile temp = board.getTile(x, y + forward);
+				if(temp.isEmpty()) 
+				{
+					movements.add(temp);
+				}
+			}
+			else if(move.equals("a"))
 			{
 				movements.addAll(board.getDirection(move,tile));
 			}
+			else if(move.equals("r"))
+			{
+				ArrayList<Tile> east = board.getE(tile);
+				ArrayList<Tile> west = board.getW(tile);
+				movements.addAll(removeJumps(east, tile));
+				movements.addAll(removeJumps(west,tile));
+			}
+			else if(move.equals("c"))
+			{
+				ArrayList<Tile> north = board.getN(tile);
+				ArrayList<Tile> south =	board.getS(tile);
+				movements.addAll(removeJumps(north,tile));
+				movements.addAll(removeJumps(south,tile));
+				
+			}
+			//general directions from board class
+			else
+			{
+				movements.addAll(removeJumps(board.getDirection(move,tile),tile));
+			}
 		}
-
+		movements = trimMovements(movements, tile);
 		return movements;
 	}
 	
-	public ArrayList<Tile> getTrimmedMovements(Tile tile)
+	/**
+	 * Takes a linear list of moves and adds each tile until it comes to an unpassable tile
+	 * @param list linear list of moves (tiles must be in order)
+	 * @param origin location of start tile
+	 * @return
+	 */
+	public ArrayList<Tile> removeJumps(ArrayList<Tile> list, Tile origin)
 	{
-		ArrayList<Tile> movements = getMovements(tile);
-		movements = trimMovements(movements, tile);	
-		return movements;
+		ArrayList<Tile> noJumps = new ArrayList<>();
+		Piece piece = origin.getPiece();
+		
+		for(Tile tile : list)
+		{
+			if(tile.isEmpty()) 
+			{
+				noJumps.add(tile);
+			}
+			else if(tile.getPiece().getTeam() != piece.getTeam())
+			{
+				noJumps.add(tile);
+			}
+			else
+			{
+				break;
+			}
+		}
+		
+		return noJumps;
 	}
 	
 
