@@ -278,7 +278,7 @@ public class Chess extends Game{
 			{
 				output.add(tempTile);
 			}
-			else if(!tile.getPiece().getTeam().equals(piece.getTeam()))
+			else if(!tempTile.getPiece().getTeam().equals(piece.getTeam()))
 			{
 				output.add(tempTile);
 			}
@@ -388,7 +388,8 @@ public class Chess extends Game{
 				{
 					movements.add(temp1);
 				}
-				if(!temp2.isEmpty()) {
+				if(!temp2.isEmpty()) 
+				{
 					movements.add(temp1);
 				}
 			}
