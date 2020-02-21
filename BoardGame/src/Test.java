@@ -14,7 +14,7 @@ public class Test {
 		//testChessGetTile();
 		//testChessCheckTileNames();	
 		//testChessGetTileGetTeam();
-		testCastling();
+		//testCastling();
 		//testGetRow();
 		//testGame();
 		//testGetCol();
@@ -22,6 +22,22 @@ public class Test {
 		//testGetN();
 		//testGetE();
 		//testBishop();
+		testRookCastle();
+	}
+	
+	public static void testRookCastle()
+	{
+		Team w = new Team("white");
+		Team b = new Team("black");
+		Chess test = new Chess(w,b);
+		test.emptyBoard();
+		
+		Rook rook1 = new Rook(w);
+		Rook rook2 = new Rook(w);
+		test.getTile("a1").setPiece(rook1);
+		test.getTile("h1").setPiece(rook2);
+		test.movePiece(w);
+		
 	}
 	
 	public static void testGetW()
@@ -30,7 +46,13 @@ public class Test {
 		Chess test = new Chess();
 		for(int i = 0; i < test.getBoard().getY(); i++)
 		{
-			
+			for(int j = 0; j < test.getBoard().getX(); j++)
+			{
+				int row = i + 1;
+				Tile temp = test.getTile(letters[j]+row);
+				System.out.println("Test for tile " + temp.getName());
+				System.out.println(test.getBoard().getW(temp));
+			}
 		}
 	}
 	

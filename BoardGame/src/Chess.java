@@ -171,12 +171,16 @@ public class Chess extends Game{
 		if(one == two)
 		{
 			return false;
-		}
+		}	
 		
 		boolean oneHasCastle = false;
 		boolean twoHasCastle = false;
 		if(!one.isEmpty() && !two.isEmpty())
 		{
+			if(one.getPiece().getType().equals(two.getPiece().getType()))
+			{
+				return false;
+			}
 			for(String move : one.getPiece().getMoveList())
 			{
 				if(move.equals("castle"))
