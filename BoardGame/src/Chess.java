@@ -231,10 +231,7 @@ public class Chess extends Game{
 		return false;
 	}
 	
-	public void checkCheckMate(Team team)
-	{
-		
-	}
+
 	
 	/**
 	 * looks for the Team's king on the board
@@ -297,11 +294,11 @@ public class Chess extends Game{
 	}
 	
 	/**
-	 * Returns true if team's king is in check
-	 * @param team Team potentially in check
-	 * @return true if in check, false if not in check
+	 * Retrieves the team of the opponent
+	 * @param team Team opposite of the one you want to get
+	 * @return opponents Team
 	 */
-	public boolean checkCheck(Team team, Tile tile)
+	public Team getOpponent(Team team)
 	{
 		Team opponent = null;
 		if(team == white)
@@ -312,7 +309,22 @@ public class Chess extends Game{
 		{
 			opponent = white;
 		}
+		return opponent;
+	}
+	
+	public void checkCheckMate(Team team)
+	{
 		
+	}
+	
+	/**
+	 * Returns true if team's king is in check
+	 * @param team Team potentially in check
+	 * @return true if in check, false if not in check
+	 */
+	public boolean checkCheck(Team team, Tile tile)
+	{
+		Team opponent = getOpponent(team);
 		ArrayList<Tile> moveableTiles = getMoveableTiles(opponent);
 		for(Tile tempTile : moveableTiles)
 		{
