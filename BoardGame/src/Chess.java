@@ -157,6 +157,12 @@ public class Chess extends Game{
 		}
 	}
 	
+	/**
+	 * Checks to see if two pieces within the two tiles are capable of castling each other
+	 * @param one King or Rook
+	 * @param two King or Rook
+	 * @return true if its possible, false if not
+	 */
 	public boolean checkCastle(Tile one, Tile two)
 	{
 		ArrayList<Tile> east = board.getE(one);
@@ -220,6 +226,100 @@ public class Chess extends Game{
 		}
 		return false;
 	}
+	
+	public void checkCheckMate(Team team)
+	{
+		
+	}
+	
+	/**
+	 * looks for the Team's king on the board
+	 * @param team Team who's king to look for
+	 * @return the tile containing the Team's king
+	 */
+	public Tile findKing(Team team)
+	{
+		ArrayList<Tile> teamTiles = getTeamTiles(team);
+		for(Tile tile : teamTiles)
+		{
+			Piece piece = tile.getPiece();
+			if(piece.getType().equals("king"))
+			{
+				return tile;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Gets all the tiles of a given team containing a piece that has a possible movement
+	 * @param team Team who's pieces you want to check for
+	 * @return ArrayList<Tile> containing tiles with team's pieces that can make a movement
+	 */
+	public ArrayList<Tile> getMoveableTiles(Team team)
+	{
+		ArrayList<Tile> moveable = new ArrayList<>();
+		ArrayList<Tile> tiles = getTeamTiles(team);
+		for(Tile tile : tiles)
+		{
+			ArrayList<Tile> movements = getMovements(tile);
+			if(!movements.isEmpty())
+			{
+				moveable.add(tile);
+			}
+		}
+		return moveable;
+	}
+	
+	/**
+	 * Gets all the tiles containing a piece of the given team 
+	 * @param team Team you want to find their tiles for
+	 * @return ArrayList<Tile> containing every tile that has a piece of the given team
+	 */
+	public ArrayList<Tile> getTeamTiles(Team team)
+	{
+		ArrayList<Tile> tiles = new ArrayList<>();
+		for(Tile tile : board.getBoard()) 
+		{
+			if(!tile.isEmpty()) 
+			{
+				if(tile.getPiece().getTeam() == team)
+				{
+					tiles.add(tile);
+				}
+			}
+		}
+		return tiles;
+	}
+	
+	/**
+	 * Returns true if team's king is in check
+	 * @param team Team potentially in check
+	 * @return true if in check, false if not in check
+	 */
+	public boolean checkCheck(Team team, Tile tile)
+	{
+		Team opponent = null;
+		if(team == white)
+		{
+			opponent = black;
+		}
+		else
+		{
+			opponent = white;
+		}
+		
+		ArrayList<Tile> moveableTiles = getMoveableTiles(opponent);
+		for(Tile tempTile : moveableTiles)
+		{
+			ArrayList<Tile> movements = getMovements(tempTile);
+			if(movements.contains(tile)) 
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Takes string input of column(a-g) + row number
@@ -248,6 +348,9 @@ public class Chess extends Game{
 		return board.getTile(x,y);
 	}
 	
+	/**
+	 * Takes the board and assigns each tile a name like "a1"
+	 */
 	public void nameTiles()
 	{
 		for(int i = 0; i < board.getY(); i++)
@@ -365,8 +468,9 @@ public class Chess extends Game{
 	{
 		ArrayList<Tile> movements = new ArrayList<>();
 		Piece piece = tile.getPiece();
+		Team team = piece.getTeam();
 		String[] moveList = piece.getMoveList();
-		int forward = piece.getTeam().getForward();
+		int forward = team.getForward();
 		int x = tile.getX();
 		int y = tile.getY();
 		
@@ -489,6 +593,19 @@ public class Chess extends Game{
 				movements.addAll(removeJumps(sw,tile));
 				
 			}
+		}
+		
+		if(tile.getPiece().getType().equals("king"))
+		{
+			ArrayList<Tile> tempList = new ArrayList<>();
+			for(Tile temp : movements)
+			{
+				if(!checkCheck(team,temp))
+				{
+					tempList.add(temp);
+				}
+			}
+			movements = tempList;
 		}
 		movements = removeLikeTeams(movements, tile);
 		return movements;
@@ -643,6 +760,13 @@ public class Chess extends Game{
 			alivePieces.add(pawn);
 			board.getTile(i,frontRow).setPiece(pawn);
 		}		
+	}
+	
+	public void upgradePawn(Tile tile)
+	{
+		Team team = tile.getPiece().getTeam();
+		Queen queen = new Queen(team);
+		tile.setPiece(queen);
 	}
 	
 	public String toString()
